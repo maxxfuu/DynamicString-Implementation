@@ -12,19 +12,18 @@ public:
     // it allocates a new array, then uses strcpy() to copy
     // chars from array s to the new array
 
-    // Constructor 
-    StringType() {
+    
 
-    }; 
-
+    // Constructor with 1 parameter 
     StringType (const char* s = "") {
-        // you fill in
+        buffer = strdup(s); 
+        capacity = strlen(s); 
     }
 
     // copy constructor for a StringType, must make a deep copy
     // of s for this. (you can use strdup() you wrote)
     StringType (const StringType& s) {
-        // you fill in
+        buffer = strdup(s.buffer); 
     }
 
     // move constructor
