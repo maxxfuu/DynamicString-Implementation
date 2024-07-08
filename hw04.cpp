@@ -11,8 +11,6 @@ public:
     // it allocates a new array, then uses strcpy() to copy
     // chars from array s to the new array
 
-    
-
     // Constructor with 1 parameter 
     StringType (const char* s = "") {
         // strdup(s) returns a newly pointer to a newly duplicated string. 
@@ -48,17 +46,28 @@ public:
     // move assignment operator overload
     StringType& operator=(StringType&& s) noexcept {
         // you fill in
+        if (this != &s) { 
+            free(buffer); 
+            buffer = s.buffer; 
+            capacity = s.capacity; 
+            s.buffer = nullptr; 
+            capacity = 0; 
+        }
     }
 
     // return a reference to the char at position index, 0 is
     // the first element and so on
-    // index must be in bounds
+    
     char& operator[](const int index) {
-        // you fill in
+        // The only constraint is that the index must be in bounds. 
+        if (index < 0 || index >= capacity) {
+            throw std::out_of_range("Index out of bounds"); 
+        }
+        return buffer[index]; 
     }
 
     int length() const {
-        // you fill in
+        return capacity; 
     }
 
     // returns the index of the first occurrence of c in this StringType
@@ -66,21 +75,40 @@ public:
     // returns −1 if the character c is not in this StringType
     int indexOf(char c) const {
         // you fill in
+        for (int i = 0; i < capacity; i++) { 
+            if(buffer[i] == c) {
+                return i; 
+            } else { 
+                return -1; 
+            }
+        }
     }
 
     // returns the index of the first occurrence of pat in this StringType
     // indices range from 0 to length()−1
     // returns −1 if the character string pat is not in this StringType
     // write and use strstr() to implement this function
+
     int indexOf(const StringType& pat) const {
-        // you fill in
+        //          strstr( "string var", objs buffer ) 
+        char *ptr = strstr(buffer, pat.buffer);
+        if (ptr) { 
+            // subtraction of pointer arithmetic to find the index. 
+            return ptr - buffer; 
+        } 
+        return -1; 
+        
     }
 
     // true if both StringType objects contain the same chars
     // in same position. e.g., ”abc”==”abc” returns true
     // write and use strcmp() to implement this function
     bool operator==(const StringType& s) const {
-        // you fill in
+        if (strcmp(buffer, s.buffer) == 0) { 
+            return true; 
+        } else { 
+            return false; 
+        }
     }
 
     // concatenates this and s to make a new StringType
@@ -89,7 +117,7 @@ public:
     // it should allocate a new array then call strcpy()
     // and strcat()
     StringType operator+(const StringType& s) const {
-        // you fill in
+        
     }
 
     // concatenates s on to end of this
