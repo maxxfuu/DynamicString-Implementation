@@ -16,6 +16,7 @@ public:
 
     // Constructor with 1 parameter 
     StringType (const char* s = "") {
+        // strdup(s) returns a newly pointer to a newly duplicated string. 
         buffer = strdup(s); 
         capacity = strlen(s); 
     }
@@ -24,11 +25,12 @@ public:
     // of s for this. (you can use strdup() you wrote)
     StringType (const StringType& s) {
         buffer = strdup(s.buffer); 
+        capacity = s.capacity; 
     }
 
     // move constructor
-    StringType (StringType&& s) noexcept {
-        // you fill in
+    StringType (StringType&& s) noexcept : buffer(nullptr), capacity(s.capacity) {
+        s.buffer = nullptr; // resetting to indicate that it no longer owns resources. 
     }
 
     // assigns this StringType from StringType s (perform deep assignment)
