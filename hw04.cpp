@@ -1,6 +1,5 @@
 #include <iostream> 
-
-
+#include <fstream> 
 
 class StringType {
 
@@ -31,13 +30,19 @@ public:
     // move constructor
     StringType (StringType&& s) noexcept : buffer(nullptr), capacity(s.capacity) {
         s.buffer = nullptr; // resetting to indicate that it no longer owns resources. 
+        s.capacity = 0; 
     }
 
     // assigns this StringType from StringType s (perform deep assignment)
     // remember, both this and s have been previously constructed
     // so they each have storage pointed to by buf
     StringType& operator=(const StringType& s) {
-        // you fill in
+        if (this != &s) { 
+            free(buffer); 
+            buffer = strdup(s.buffer); 
+            capacity = s.capacity;
+        }
+        return *this; 
     }
 
     // move assignment operator overload
@@ -103,14 +108,14 @@ public:
     }
 
     // prints out this StringType to the ostream out
-    void print(ostream& out) const {
+    void print(std::ostream& out) const {
         // you fill in
     }
 
     // reads a word from the istream in and this StringType
     // becomes the same as the characters in that word
     // use getline() to implement read()
-    void read(istream& in) {
+    void read(std::istream& in) {
         // you fill in
     }
 
@@ -126,12 +131,12 @@ private:
 
 // these two I/O methods are complete as long as you define
 // print and read methods correctly
-inline ostream& operator<<(ostream& out, const StringType& str) {
+inline std::ostream& operator<<(std::ostream& out, const StringType& str) {
     str.print(out);
     return out;
 }
 
-inline istream& operator>>(istream& in, StringType& str) {
+inline std::istream& operator>>(std::istream& in, StringType& str) {
     str.read(in);
     return in;
 }
@@ -145,7 +150,7 @@ StringType copyConstructorTest(StringType l) {
 }
 
 void testReverse() {
-    ifstream in("input.txt");
+    std::ifstream in("input.txt");
     StringType l;
     while (in >> l) {
         std::cout << copyConstructorTest(l)
