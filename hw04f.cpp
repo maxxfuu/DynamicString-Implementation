@@ -137,19 +137,21 @@ public:
 
     // prints out this StringType to the ostream out
     void print(std::ostream& out) const {
-        // you fill in
+        out << buffer; 
     }
 
     // reads a word from the istream in and this StringType
     // becomes the same as the characters in that word
     // use getline() to implement read()
     void read(std::istream& in) {
-        // you fill in
+        std::string temp; 
+        in >> temp; 
+        *this = StringType(temp.c_str()); 
     }
 
     // destruct a StringType, must free up each node in the head list
     ~StringType() {
-        // you fill in
+        free(buffer); 
     }
 
 private:

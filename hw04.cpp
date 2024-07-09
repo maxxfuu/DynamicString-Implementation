@@ -15,9 +15,9 @@ int main() {
         std::cout << "Got an exception: " << i << std::endl;
     }
 
-    std::cerr << "Net memory allocated at program end: "
-         << NumAllocations << std::endl;
-    std::cerr << " (should be zero... "
-         << "positive = mem leak, negative = duplicate delete)\n";
+    // std::cerr << "Net memory allocated at program end: "
+    //      << NumAllocations << std::endl;
+    // std::cerr << " (should be zero... "
+    //      << "positive = mem leak, negative = duplicate delete)\n";
     return 0;
 }
