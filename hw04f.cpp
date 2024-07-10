@@ -111,13 +111,16 @@ public:
         }
     }
 
+
     // concatenates this and s to make a new StringType
     // e.g., ”abc”+”def” returns ”abcdef”
-    // write and use str2dup() to implement this function,
+    // write and use strdup() to implement this function,
     // it should allocate a new array then call strcpy()
     // and strcat()
     StringType operator+(const StringType& s) const {
-        
+        size_t newCapacity = capacity + s.capacity;
+        char* newBuffer = new char[newCapacity + 1]; 
+
     }
 
     // concatenates s on to end of this
