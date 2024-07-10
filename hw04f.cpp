@@ -120,6 +120,8 @@ public:
     StringType operator+(const StringType& s) const {
         size_t newCapacity = capacity + s.capacity;
         char* newBuffer = new char[newCapacity + 1]; 
+        
+        char* newBugger = char[newCapacity + 1]; 
 
     }
 
