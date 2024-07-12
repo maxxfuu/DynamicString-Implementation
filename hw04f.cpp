@@ -5,26 +5,25 @@ StringType::StringType() : buffer(nullptr), capacity(0) {}
 
 StringType::StringType(const char* s) {
         // strdup(s) returns a newly pointer to a newly duplicated string. 
-        buffer = strdup(s); 
-        capacity = strlen(s); 
+        if (s) { 
+            buffer = strdup(s); 
+            capacity = strlen(s); 
+        } else { 
+            *this = StringType(); // Use Default Constructor if s is a null-pointer. 
+        }
     }
 
-    // copy constructor for a StringType, must make a deep copy
-    // of s for this. (you can use strdup() you wrote)
 StringType::StringType (const StringType& s) {
         buffer = strdup(s.buffer); 
         capacity = s.capacity; 
     }
 
-    // move constructor
-StringType::StringType (StringType&& s) noexcept : buffer(nullptr), capacity(s.capacity) {
+StringType::StringType (StringType&& s) noexcept 
+        : buffer(s.buffer), capacity(s.capacity) {
         s.buffer = nullptr; // resetting to indicate that it no longer owns resources. 
         s.capacity = 0; 
     }
 
-    // assigns this StringType from StringType s (perform deep assignment)
-    // remember, both this and s have been previously constructed
-    // so they each have storage pointed to by buf
 StringType& StringType::operator=(const StringType& s) {
     if (this != &s) { 
         free(buffer); 
@@ -34,7 +33,6 @@ StringType& StringType::operator=(const StringType& s) {
     return *this; 
 }
 
-    // move assignment operator overload
 StringType& StringType::operator=(StringType&& s) noexcept {
         // you fill in
         if (this != &s) { 
@@ -46,9 +44,6 @@ StringType& StringType::operator=(StringType&& s) noexcept {
         }
         return *this; 
     }
-
-    // return a reference to the char at position index, 0 is
-    // the first element and so on
     
 char& StringType::operator[](const int index) {
     // The only constraint is that the index must be in bounds. 
@@ -63,9 +58,6 @@ int StringType::length() const {
     return capacity; 
 }
 
-    // returns the index of the first occurrence of c in this StringType
-    // indices range from 0 to length()−1
-    // returns −1 if the character c is not in this StringType
     int StringType::indexOf(char c) const {
         // you fill in
         for (int i = 0; i < capacity; i++) { 
@@ -76,10 +68,6 @@ int StringType::length() const {
         return -1; 
     }
 
-    // returns the index of the first occurrence of pat in this StringType
-    // indices range from 0 to length()−1
-    // returns −1 if the character string pat is not in this StringType
-    // write and use strstr() to implement this function
 
     int StringType::indexOf(const StringType& pat) const {
         //          strstr( "string var", objs buffer ) 
@@ -92,9 +80,6 @@ int StringType::length() const {
         
     }
 
-    // true if both StringType objects contain the same chars
-    // in same position. e.g., ”abc”==”abc” returns true
-    // write and use strcmp() to implement this function
     bool StringType::operator==(const StringType& s) const {
         if (strcmp(buffer, s.buffer) == 0) { 
             return true; 
@@ -102,12 +87,6 @@ int StringType::length() const {
         return false; 
     }
 
-
-    // concatenates this and s to make a new StringType
-    // e.g., ”abc”+”def” returns ”abcdef”
-    // write and use strdup() to implement this function,
-    // it should allocate a new array then call strcpy()
-    // and strcat()
     StringType StringType::operator+(const StringType& s) const {
         
         size_t newCapacity = capacity + s.capacity;
@@ -120,9 +99,6 @@ int StringType::length() const {
         
     }
 
-    // concatenates s on to end of this
-    // e.g., s = ”abc”; s+=”def” now s is ”abcdef”
-    // use strdup()
     StringType& StringType::operator+=(const StringType& s) {
         size_t newCapacity = capacity + s.capacity; 
         char* newBuffer = new char[newCapacity]; 
@@ -137,10 +113,6 @@ int StringType::length() const {
 
     }
 
-    // returns another StringType that is the reverse of this StringType
-    // e.g., s = ”abc”; s.reverse() returns ”cba”
-    // write strrev(char* dest, char* src) like strcpy() but
-    // copies the reverse of src into dest, then use it
     StringType StringType::reverse() const {
         char* reverse = new char[capacity + 1]; 
         for (int i = 0; i < capacity; i++) { 
@@ -153,23 +125,24 @@ int StringType::length() const {
 
     }
 
-    // prints out this StringType to the ostream out
     void StringType::print(std::ostream& out) const {
-        out << buffer; 
+        if (buffer) {
+            out << buffer;
+        } else {
+            out << "(empty)";  // print empty for StringObjecfs that have been moved. 
+        }
     }
 
-    // reads a word from the istream in and this StringType
-    // becomes the same as the characters in that word
-    // use getline() to implement read()
     void StringType::read(std::istream& in) {
         std::string temp; 
         in >> temp; 
         *this = StringType(temp.c_str()); 
     }
 
-    // destruct a StringType, must free up each node in the head list
     StringType::~StringType() {
-        free(buffer); 
+        if (buffer) {
+            free(buffer);
+        } 
     }
 
 
