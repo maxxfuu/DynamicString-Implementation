@@ -58,6 +58,7 @@ public:
     // Read a word from the input
     void read(std::istream& in);
 
+
 private:
     char* buffer;
     size_t capacity;
