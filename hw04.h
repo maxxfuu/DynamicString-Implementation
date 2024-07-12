@@ -8,7 +8,7 @@
 class StringType {
 public:
     // Default constructor
-    StringType();
+    StringType(); 
 
     // Constructor with one parameter
     StringType(const char* s);

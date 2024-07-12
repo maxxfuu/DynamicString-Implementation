@@ -1,5 +1,8 @@
 #include "hw04.h"
 
+StringType::StringType() : buffer(nullptr), capacity(0) {}
+
+
 StringType::StringType(const char* s) {
         // strdup(s) returns a newly pointer to a newly duplicated string. 
         buffer = strdup(s); 
@@ -56,8 +59,6 @@ char& StringType::operator[](const int index) {
 }
 
 
-
-
 int StringType::length() const {
     return capacity; 
 }
@@ -97,9 +98,8 @@ int StringType::length() const {
     bool StringType::operator==(const StringType& s) const {
         if (strcmp(buffer, s.buffer) == 0) { 
             return true; 
-        } else { 
-            return false; 
-        }
+        } 
+        return false; 
     }
 
 
