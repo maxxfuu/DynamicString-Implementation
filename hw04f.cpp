@@ -1,18 +1,7 @@
 #include <iostream> 
 #include <fstream> 
 
-class StringType {
-
-public:
-    // one parameter constructor constructs this object from a c-string
-    // s (s is an array of char terminated by ’\0’)
-    // parameter s, defaults to the empty string ””
-    // write and use strdup() to implement this constructor,
-    // it allocates a new array, then uses strcpy() to copy
-    // chars from array s to the new array
-
-    // Constructor with 1 parameter 
-    StringType (const char* s = "") {
+StringType::StringType(const char* s = "") {
         // strdup(s) returns a newly pointer to a newly duplicated string. 
         buffer = strdup(s); 
         capacity = strlen(s); 
@@ -118,11 +107,15 @@ public:
     // it should allocate a new array then call strcpy()
     // and strcat()
     StringType operator+(const StringType& s) const {
+        
         size_t newCapacity = capacity + s.capacity;
         char* newBuffer = new char[newCapacity + 1]; 
+        strcpy(newBuffer, s.buffer);                // strcpy(pointer to destination, pointer to source) 
+        strcat(newBuffer, this->buffer);            // strcat(pointer to destination, pointer to source) 
+        StringType newString(newBuffer); 
+        delete[] newBuffer; 
+        return newString;
         
-        char* newBugger = char[newCapacity + 1]; 
-
     }
 
     // concatenates s on to end of this
@@ -159,10 +152,6 @@ public:
         free(buffer); 
     }
 
-private:
-    char* buffer;
-    int capacity; // or better: size_t capacity
-};
 
 // these two I/O methods are complete as long as you define
 // print and read methods correctly

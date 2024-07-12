@@ -1,4 +1,5 @@
 CC = g++
+CXXFLAGS = -std=c++11
 
 PROGRAM = hw04 
 OBJS = hw04.o hw04f.o
@@ -9,14 +10,14 @@ all: $(PROGRAM)
 
 # Link the program
 $(PROGRAM): $(OBJS)
-	$(CC) $(OBJS) -o $(PROGRAM)
+	$(CC) $(OBJS) $(CXXFLAGS) -o $(PROGRAM)
 
 # Compilation rules for each object file
 hw04.o: hw04.cpp $(HEADERS)
-	$(CC) -c hw04.cpp -o hw04.o
+	$(CC) $(CXXFLAGS) -c hw04.cpp -o hw04.o
 
 hw04f.o: hw04f.cpp $(HEADERS)
-	$(CC) -c hw04f.cpp -o hw04f.o
+	$(CC) $(CXXFLAGS) -c hw04f.cpp -o hw04f.o
 
 clean: 
 	rm -f *.o
