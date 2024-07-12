@@ -6,7 +6,7 @@ OBJS = hw04.o hw04f.o
 HEADERS = hw04.h
 
 # Default make target
-all: $(PROGRAM)
+all: clean $(PROGRAM)
 
 # Link the program
 $(PROGRAM): $(OBJS)
