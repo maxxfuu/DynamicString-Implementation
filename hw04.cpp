@@ -1,6 +1,6 @@
 #include "hw04.h"
 #include "hw04f.cpp"
-
+#include <fstream>
 
 // write more test functions here
 

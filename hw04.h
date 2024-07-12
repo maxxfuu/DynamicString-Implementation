@@ -64,15 +64,4 @@ private:
     size_t capacity;
 };
 
-// I/O operators
-inline std::ostream& operator<<(std::ostream& out, const StringType& str) {
-    str.print(out);
-    return out;
-}
-
-inline std::istream& operator>>(std::istream& in, StringType& str) {
-    str.read(in);
-    return in;
-}
-
 #endif // HW04_H
